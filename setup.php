@@ -312,8 +312,7 @@ $products = [
 		'videos' => ask_video_names( 'littmann-classic-2', 1 ),
 	],
 	[
-		// No price from the client yet, so it stays a draft until they confirm one.
-		'slug' => 'student-stethoscope', 'name' => 'Student Stethoscope', 'cat' => 'stethoscopes', 'price' => '', 'status' => 'draft',
+		'slug' => 'student-stethoscope', 'name' => 'Student Stethoscope', 'cat' => 'stethoscopes', 'price' => 1000,
 		'roles' => [ 'clinical-students', 'nurses-midwives' ], 'spec' => 'Student Pick',
 		'desc' => 'A lightweight dual-head stethoscope for students starting their clinical rotations.',
 		'fabric' => "Dual-head chest piece.\n\nWipe with an alcohol swab. Keep the tubing away from oils and direct heat.",
