@@ -142,7 +142,7 @@ update_option( 'woocommerce_pickup_location_settings', [ 'enabled' => 'yes', 'ti
 update_option( 'pickup_location_pickup_locations', [ [
 	'name'    => 'ASK Scrubs – Imenti House, Shop 4DW Basement',
 	'address' => [ 'address_1' => 'Imenti House, Limoda Exhibition, Shop 4DW Basement, Tom Mboya Street (opposite Equity Bank)', 'city' => 'Nairobi CBD', 'state' => 'KE30', 'postcode' => '', 'country' => 'KE' ],
-	'details' => 'Mon–Sat 9:00 AM – 6:30 PM. The entrance is next to Sports Collection. We will call you when your order is ready, and you can try it on before you leave.',
+	'details' => 'Mon–Sat 8:00 AM – 8:00 PM. The entrance is next to Sports Collection. We will call you when your order is ready, and you can try it on before you leave.',
 	'enabled' => true,
 ] ] );
 
