@@ -174,7 +174,7 @@ $SCRUB_CARE = "Wash inside out at 30–40°C with similar colours. No bleach. Ha
 // colour_img: which photo shows each colour (0 = main photo, 1 = second photo…).
 $products = [
 	[
-		'slug' => 'infinity-scrubs', 'name' => 'Infinity Stretch Scrub Set', 'cat' => 'scrubs', 'price' => 3500,
+		'slug' => 'infinity-scrubs', 'name' => 'Infinity Stretch Scrub Set', 'cat' => 'scrubs', 'price' => 4000,
 		'colours' => [ 'Ceil Blue', 'Wine', 'Teal', 'Seafoam', 'Black', 'Plum', 'Royal Blue', 'Navy Blue', 'Pewter' ], 'sizes' => $SIZES,
 		'colour_img' => [ 'Ceil Blue' => 0, 'Wine' => 1, 'Teal' => 2, 'Seafoam' => 3, 'Black' => 4, 'Plum' => 5, 'Royal Blue' => 6, 'Navy Blue' => 7, 'Pewter' => 8 ],
 		'roles' => $ALL_ROLES, 'spec' => '4-Way Stretch', 'featured' => true,
@@ -182,24 +182,7 @@ $products = [
 		'fabric' => "Stretch polyester–spandex blend. V-neck top with pockets, drawstring trousers. Sizes XS–2XL.\n\n$SCRUB_CARE",
 		'upsells' => [ 'infinity-jacket', 'lab-coat' ],
 	],
-	[
-		'slug' => 'landau-proflex-joggers', 'name' => 'Landau ProFlex Jogger Scrubs', 'cat' => 'jogger-scrubs', 'price' => 2200,
-		'colours' => [ 'Royal Blue', 'Pewter', 'Black', 'Navy Blue', 'Ceil Blue', 'Hunter Green', 'Red' ], 'sizes' => $SIZES,
-		'colour_img' => [ 'Royal Blue' => 0, 'Pewter' => 1, 'Black' => 2, 'Navy Blue' => 4, 'Ceil Blue' => 6, 'Hunter Green' => 7, 'Red' => 8 ],
-		'roles' => $ALL_ROLES, 'spec' => 'Jogger Fit', 'featured' => true,
-		'desc' => 'Landau ProFlex jogger scrubs with a modern tapered leg, cargo pockets and the signature lime trim. Stretchy and light, with a comfortable elastic waist.',
-		'fabric' => "Stretch ProFlex fabric. Jogger cuffs, cargo pockets, elastic and drawstring waist. Sizes XS–2XL.\n\n$SCRUB_CARE",
-		'upsells' => [ 'infinity-jacket', 'landau-flex-scrubs' ],
-	],
-	[
-		'slug' => 'landau-flex-scrubs', 'name' => 'Landau Flex Scrub Set', 'cat' => 'scrubs', 'price' => 2200,
-		'colours' => [ 'Royal Blue', 'Red', 'Pewter' ], 'sizes' => $SIZES,
-		'colour_img' => [ 'Royal Blue' => 0, 'Red' => 1, 'Pewter' => 3 ],
-		'roles' => $ALL_ROLES, 'spec' => 'Flex Fabric', 'featured' => true,
-		'desc' => 'A classic Landau Flex scrub set: a V-neck top and straight-leg trousers in a light, flexible fabric. Available in different colours and sizes XS–2XL.',
-		'fabric' => "Landau Flex fabric. V-neck top, straight-leg trousers. Sizes XS–2XL.\n\n$SCRUB_CARE",
-		'upsells' => [ 'lab-coat', 'infinity-jacket' ],
-	],
+	// Landau ProFlex and Landau Flex were removed 2026-09-29: the client says they are no longer available.
 	[
 		'slug' => 'cherokee-scrubs', 'name' => 'Cherokee Cotton Scrub Set', 'cat' => 'scrubs', 'price' => 1800,
 		'colours' => [ 'Royal Blue', 'Surgical Green', 'Ceil Blue', 'Black', 'Navy Blue', 'Purple', 'Wine', 'Teal' ], 'sizes' => $SIZES,
@@ -226,7 +209,7 @@ $products = [
 		'roles' => $ALL_ROLES, 'spec' => 'Stretch Knit', 'featured' => true,
 		'desc' => 'The Infinity warm-up jacket: a soft stretch knit with a full front zip and a stand collar, worn over your scrubs on cold mornings and night shifts. Unisex fit.',
 		'fabric' => "Stretch knit. Full front zip, stand collar, front pockets. Sizes XS–2XL.\n\nMachine wash cold, inside out. Do not tumble dry. Iron embroidery from the reverse side.",
-		'upsells' => [ 'infinity-scrubs', 'landau-proflex-joggers' ],
+		'upsells' => [ 'infinity-scrubs', 'scrubstar-ultimate' ],
 	],
 	[
 		'slug' => 'lab-coat', 'name' => 'Mint White Lab Coat', 'cat' => 'lab-coats', 'price' => 1700,
