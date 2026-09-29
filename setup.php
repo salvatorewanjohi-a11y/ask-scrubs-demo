@@ -64,7 +64,7 @@ foreach ( [ 'colour' => 'Colour', 'size' => 'Size' ] as $slug => $label ) {
 }
 delete_transient( 'wc_attribute_taxonomies' );
 
-$size_order = [ 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL' ];
+$size_order = [ 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '36', '37', '38', '39', '40', '41', '42', '43', '44' ];
 foreach ( $size_order as $i => $s ) {
 	$t = term_exists( $s, 'pa_size' ) ?: wp_insert_term( $s, 'pa_size', [ 'slug' => strtolower( $s ) ] );
 	update_term_meta( (int) $t['term_id'], 'order', $i );
@@ -98,6 +98,11 @@ foreach ( [
 	'scrub-jackets'  => 'Scrub Jackets',
 	'lab-coats'      => 'Lab Coats',
 	'nurse-uniforms' => 'Nurse Uniforms',
+	'thrift-scrubs'  => 'Thrift Scrubs',
+	'caps-layers'    => 'Caps & Pull-necks',
+	'footwear'       => 'Medical Footwear',
+	'stethoscopes'   => 'Stethoscopes',
+	'equipment'      => 'Medical Equipment',
 ] as $slug => $name ) {
 	$t = term_exists( $slug, 'product_cat' ) ?: wp_insert_term( $name, 'product_cat', [ 'slug' => $slug ] );
 	$cat[ $slug ] = (int) $t['term_id'];
@@ -206,8 +211,9 @@ $products = [
 	],
 	[
 		'slug' => 'mint-scrubs', 'name' => 'Mint Fabric Scrub Set', 'cat' => 'scrubs', 'price' => 2500,
-		'colours' => [ 'Eggplant', 'Lilac', 'Teal', 'Pink', 'Mustard', 'Orange' ], 'sizes' => $SIZES,
-		'colour_img' => [ 'Eggplant' => 0, 'Lilac' => 0, 'Teal' => 0, 'Pink' => 0, 'Mustard' => 1, 'Orange' => 1 ],
+		'colours' => [ 'Eggplant', 'Lilac', 'Teal', 'Pink', 'Mustard', 'Orange', 'Yellow', 'Purple' ], 'sizes' => $SIZES,
+		'colour_img' => [ 'Eggplant' => 0, 'Lilac' => 0, 'Teal' => 5, 'Pink' => 0, 'Mustard' => 1, 'Orange' => 2, 'Yellow' => 3, 'Purple' => 4 ],
+		'videos' => ask_video_names( 'mint-scrubs', 13 ),
 		'roles' => [ 'nurses-midwives', 'dental-lab', 'clinical-students' ], 'spec' => 'Mint Fabric', 'featured' => true,
 		'desc' => 'Scrub sets made purely from our smooth "mint" fabric, in bright colours that stand out on the ward. Fitted top with pockets and matching trousers.',
 		'fabric' => "Mint fabric: smooth, lightweight and quick-drying. Sizes XS–2XL.\n\n$SCRUB_CARE",
@@ -233,13 +239,187 @@ $products = [
 	[
 		'slug' => 'nurse-uniform', 'name' => 'NCK Nurse Uniform – White & Navy', 'cat' => 'nurse-uniforms',
 		'colours' => [ 'White & Navy' ], 'sizes' => $SIZES,
-		'options' => [ 'label' => 'Style', 'choices' => [ 'Full set (top + trousers)' => 2500, 'Top only' => 1500 ] ],
+		'options' => [ 'label' => 'Style', 'choices' => [ 'Full set (top + trousers)' => 2500, 'Top only' => 1500, 'Trousers only' => 1200 ] ],
 		'roles' => [ 'nurses-midwives', 'clinical-students' ], 'spec' => 'NCK Style', 'featured' => true,
-		'desc' => 'The white-and-navy nurse uniform in the NCK style: a white tunic with navy trim and pockets, with navy trousers. Buy the full set or the top on its own.',
+		'desc' => 'The white-and-navy nurse uniform in the NCK style, with thin or bold blue stripes: a white tunic with navy trim and pockets, with navy trousers. Buy the full set, the top on its own or the trousers on their own.',
 		'fabric' => "Polyester–cotton tunic with navy trim; navy trousers.\n\nWash at 40°C. Wash the white tunic separately from the navy trousers.",
-		'upsells' => [ 'lab-coat', 'infinity-jacket' ],
+		'upsells' => [ 'nurse-watch', 'nurse-cap', 'pen-torch-battery' ],
+		'videos' => ask_video_names( 'nurse-uniform', 2 ),
+	],
+
+	// Added from the client's WhatsApp update, 2026-09-29.
+	[
+		'slug' => 'nurse-uniform-chinese-collar', 'name' => 'Chinese Collar Nurse Uniform', 'cat' => 'nurse-uniforms',
+		'colours' => [ 'White & Navy' ], 'sizes' => $SIZES,
+		'options' => [ 'label' => 'Style', 'choices' => [ 'Full set (top + trousers)' => 3000, 'Top only' => 1800, 'Trousers only' => 1200 ] ],
+		'roles' => [ 'nurses-midwives', 'clinical-students' ], 'spec' => 'Button Front',
+		'desc' => 'A smart white nurse tunic with a Chinese (mandarin) collar, button front and navy trim, with navy trousers. Buy the full set, the top on its own or the trousers on their own.',
+		'fabric' => "Polyester–cotton tunic with navy trim; navy trousers.\n\nWash at 40°C. Wash the white tunic separately from the navy trousers.",
+		'upsells' => [ 'nurse-watch', 'nurse-cap' ],
+		'videos' => ask_video_names( 'nurse-uniform-chinese-collar', 2 ),
+	],
+	[
+		'slug' => 'nurse-uniform-buttons', 'name' => 'White Nurse Uniform – With or Without Buttons', 'cat' => 'nurse-uniforms',
+		'colours' => [ 'White & Navy' ], 'sizes' => $SIZES,
+		'options' => [ 'label' => 'Style', 'choices' => [ 'With buttons' => 3000, 'Without buttons' => 2500 ] ],
+		'roles' => [ 'nurses-midwives', 'clinical-students' ], 'spec' => 'Two Styles',
+		'desc' => 'Our white nurse uniforms, in stock in all sizes: choose the style with a button front or the pull-on style without buttons.',
+		'fabric' => "Polyester–cotton.\n\nWash at 40°C. Wash white items separately.",
+		'upsells' => [ 'nurse-watch', 'nurse-cap' ],
+	],
+	[
+		'slug' => 'scrubstar-ultimate', 'name' => 'Scrubstar Ultimate Jogger Scrubs – Black', 'cat' => 'jogger-scrubs', 'price' => 2800,
+		'colours' => [ 'Black' ], 'sizes' => [ 'XS', 'L', 'XL' ],
+		'roles' => $ALL_ROLES, 'spec' => 'Performance Stretch', 'featured' => true,
+		'desc' => 'Scrubstar Ultimate performance scrubs in black: a fitted stretch top with pockets and jogger trousers with cuffed ankles and cargo pockets. Currently available in XS, L and XL.',
+		'fabric' => "Performance stretch fabric. Jogger trousers with cuffs and cargo pockets.\n\n$SCRUB_CARE",
+		'upsells' => [ 'pullneck', 'infinity-jacket' ],
+	],
+	[
+		'slug' => 'thrift-scrubs', 'name' => 'Thrift (Mtumba) Scrub Sets', 'cat' => 'thrift-scrubs', 'price' => 800,
+		'colours' => [ 'Assorted' ],
+		'roles' => [ 'clinical-students', 'nurses-midwives', 'doctors-surgeons' ], 'spec' => 'Budget Pick', 'featured' => true,
+		'desc' => 'Quality second-hand (mtumba) scrub sets at KSh 800 per set, in plain colours and fun prints. Stock changes every day, so tell us your size and favourite colours on WhatsApp, or come in and pick your own.',
+		'fabric' => "Second-hand scrubs, cleaned and sorted by size. Sizes and colours vary.\n\n$SCRUB_CARE",
+		'upsells' => [ 'nurse-cap', 'pullneck' ],
+		'videos' => ask_video_names( 'thrift-scrubs', 3 ),
+	],
+	[
+		'slug' => 'pullneck', 'name' => 'Pull-neck Underscrub', 'cat' => 'caps-layers', 'price' => 550,
+		'colours' => [ 'Bottle Green', 'Navy Blue', 'Cream', 'Black', 'Grey', 'Maroon' ],
+		'colour_img' => [ 'Bottle Green' => 0, 'Navy Blue' => 1, 'Cream' => 1, 'Black' => 2, 'Grey' => 3, 'Maroon' => 4 ],
+		'roles' => $ALL_ROLES, 'spec' => 'Warm Layer',
+		'desc' => 'A soft, stretchy long-sleeve pull-neck (turtleneck) to wear under your scrubs on cold mornings and night shifts.',
+		'fabric' => "Soft stretch knit.\n\nMachine wash cold with similar colours. Do not tumble dry.",
+		'upsells' => [ 'infinity-jacket', 'scrubstar-ultimate' ],
+	],
+	[
+		'slug' => 'nurse-cap', 'name' => 'Theatre / Nurse Cap', 'cat' => 'caps-layers', 'price' => 950,
+		'colours' => [ 'Printed', 'Pink', 'Green', 'Navy Blue', 'Sky Blue' ],
+		'colour_img' => [ 'Printed' => 0, 'Pink' => 1, 'Green' => 2, 'Navy Blue' => 3, 'Sky Blue' => 4 ],
+		'roles' => $ALL_ROLES, 'spec' => 'Button Sides',
+		'desc' => 'Comfortable bouffant-style theatre caps that fit long hair and braids, with buttons at the sides for your mask loops. Plain colours and cheerful prints.',
+		'fabric' => "Cotton. Back ties, side buttons for mask loops.\n\nMachine wash warm with similar colours. Air dry.",
+		'upsells' => [ 'mint-scrubs', 'cherokee-scrubs' ],
+		'videos' => ask_video_names( 'nurse-cap', 7 ),
+	],
+	[
+		'slug' => 'anti-slip-crocs', 'name' => 'Anti-Slip Medical Clogs', 'cat' => 'footwear', 'price' => 2500,
+		'colours' => [ 'White', 'Black' ], 'sizes' => [ '36', '37', '38', '39', '40', '41', '42', '43', '44' ],
+		'colour_img' => [ 'White' => 0, 'Black' => 2 ],
+		'roles' => [ 'doctors-surgeons', 'nurses-midwives', 'dental-lab' ], 'spec' => 'Anti-Slip',
+		'desc' => 'Closed medical clogs with an anti-slip sole for wet ward and theatre floors. Easy to wipe clean and comfortable on long shifts.',
+		'fabric' => "Moulded, wipe-clean upper with an anti-slip sole.\n\nRinse or wipe with warm soapy water. Keep out of direct heat.",
+		'upsells' => [ 'nurse-cap', 'mint-scrubs' ],
+	],
+	[
+		'slug' => 'littmann-classic-3', 'name' => 'Littmann Classic III Stethoscope', 'cat' => 'stethoscopes', 'price' => 5000,
+		'roles' => [ 'doctors-surgeons', 'nurses-midwives', 'clinical-students' ], 'spec' => '3M Littmann', 'featured' => true,
+		'desc' => 'The 3M Littmann Classic III: a dual-sided stethoscope with tunable diaphragms for excellent sound, the everyday choice of doctors and clinical students.',
+		'fabric' => "Dual-head chest piece with tunable diaphragms, supplied boxed with spare parts.\n\nWipe with an alcohol swab. Keep the tubing away from oils and direct heat.",
+		'upsells' => [ 'pen-torch-rechargeable', 'bp-machine-manual' ],
+		'videos' => ask_video_names( 'littmann-classic-3', 1 ),
+	],
+	[
+		'slug' => 'littmann-classic-2', 'name' => 'Littmann Classic II S.E. Stethoscope', 'cat' => 'stethoscopes', 'price' => 4000,
+		'roles' => [ 'doctors-surgeons', 'nurses-midwives', 'clinical-students' ], 'spec' => '3M Littmann',
+		'desc' => 'The 3M Littmann Classic II S.E.: a reliable dual-head stethoscope for clinical rotations and ward work.',
+		'fabric' => "Dual-head chest piece, supplied boxed.\n\nWipe with an alcohol swab. Keep the tubing away from oils and direct heat.",
+		'upsells' => [ 'pen-torch-battery', 'tape-measure' ],
+		'videos' => ask_video_names( 'littmann-classic-2', 1 ),
+	],
+	[
+		// No price from the client yet, so it stays a draft until they confirm one.
+		'slug' => 'student-stethoscope', 'name' => 'Student Stethoscope', 'cat' => 'stethoscopes', 'price' => '', 'status' => 'draft',
+		'roles' => [ 'clinical-students', 'nurses-midwives' ], 'spec' => 'Student Pick',
+		'desc' => 'A lightweight dual-head stethoscope for students starting their clinical rotations.',
+		'fabric' => "Dual-head chest piece.\n\nWipe with an alcohol swab. Keep the tubing away from oils and direct heat.",
+		'upsells' => [ 'pen-torch-battery', 'tape-measure' ],
+	],
+	[
+		'slug' => 'bp-machine-electronic', 'name' => 'Electronic BP Machine', 'cat' => 'equipment', 'price' => 3500,
+		'roles' => [ 'nurses-midwives', 'doctors-surgeons', 'clinical-students' ], 'spec' => 'Digital',
+		'desc' => 'An automatic upper-arm blood pressure monitor with a large digital display. Easy to use at the clinic or at home.',
+		'fabric' => "Automatic upper-arm monitor with cuff.",
+		'upsells' => [ 'pulse-oximeter', 'digital-thermometer' ],
+	],
+	[
+		'slug' => 'bp-machine-manual', 'name' => 'Manual BP Machine (Sphygmomanometer)', 'cat' => 'equipment', 'price' => 2500,
+		'roles' => [ 'nurses-midwives', 'doctors-surgeons', 'clinical-students' ], 'spec' => 'Aneroid',
+		'desc' => 'A manual aneroid sphygmomanometer with an adult cuff, bulb and gauge: the classic kit for taking blood pressure by auscultation.',
+		'fabric' => "Aneroid gauge, adult cuff, inflation bulb and carry case.",
+		'upsells' => [ 'littmann-classic-3', 'littmann-classic-2' ],
+	],
+	[
+		'slug' => 'pulse-oximeter', 'name' => 'Fingertip Pulse Oximeter', 'cat' => 'equipment',
+		'options' => [ 'label' => 'Type', 'choices' => [ 'Adult' => 2000, 'Paediatric' => 2500 ] ],
+		'roles' => [ 'nurses-midwives', 'doctors-surgeons', 'clinical-students' ], 'spec' => 'SpO₂ & Pulse',
+		'desc' => 'A fingertip pulse oximeter that reads oxygen saturation (SpO₂) and pulse rate in seconds. Choose the adult or the paediatric size.',
+		'fabric' => "Fingertip clip with digital display.\n\nWipe with an alcohol swab between patients.",
+		'upsells' => [ 'digital-thermometer', 'bp-machine-electronic' ],
+	],
+	[
+		'slug' => 'digital-thermometer', 'name' => 'Digital Thermometer', 'cat' => 'equipment', 'price' => 300,
+		'roles' => [ 'nurses-midwives', 'clinical-students' ], 'spec' => 'Fast Reading',
+		'desc' => 'A quick-reading digital thermometer for oral, underarm or rectal use.',
+		'fabric' => "Digital display, battery included.\n\nClean the tip with an alcohol swab after each use.",
+		'upsells' => [ 'pulse-oximeter' ],
+	],
+	[
+		'slug' => 'pen-torch-rechargeable', 'name' => 'Rechargeable Pen Torch', 'cat' => 'equipment', 'price' => 1000,
+		'roles' => [ 'clinical-students', 'nurses-midwives', 'doctors-surgeons' ], 'spec' => 'USB Rechargeable',
+		'desc' => 'A metal pen torch that charges from any USB port, so there are no batteries to replace. Comes in a metal case.',
+		'fabric' => "Metal body, pocket clip, USB charging, metal case.",
+		'upsells' => [ 'littmann-classic-3', 'tape-measure' ],
+	],
+	[
+		'slug' => 'pen-torch-battery', 'name' => 'LED Pen Torch (Battery)', 'cat' => 'equipment', 'price' => 650,
+		'roles' => [ 'clinical-students', 'nurses-midwives', 'doctors-surgeons' ], 'spec' => 'Batteries Included',
+		'desc' => 'A bright LED pen torch for checking pupils and throats, supplied with button batteries.',
+		'fabric' => "LED pen torch with pocket clip and button batteries.",
+		'upsells' => [ 'littmann-classic-2', 'tape-measure' ],
+		'videos' => ask_video_names( 'pen-torch-battery', 1 ),
+	],
+	[
+		'slug' => 'nurse-watch', 'name' => 'Nurse Fob Watch', 'cat' => 'equipment', 'price' => 650,
+		'colours' => [ 'Pink', 'Gold' ], 'colour_img' => [ 'Pink' => 0, 'Gold' => 1 ],
+		'roles' => [ 'nurses-midwives', 'clinical-students' ], 'spec' => 'Pin-On',
+		'desc' => 'A pin-on fob watch with a clear face and second hand for timing pulses and respirations.',
+		'fabric' => "Pin-on clip, second hand.",
+		'upsells' => [ 'nurse-uniform', 'pen-torch-battery' ],
+	],
+	[
+		'slug' => 'retractable-tape', 'name' => 'Retractable Tape Measure', 'cat' => 'equipment', 'price' => 250,
+		'colours' => [ 'Pink', 'White' ], 'colour_img' => [ 'Pink' => 0, 'White' => 2 ],
+		'roles' => [ 'nurses-midwives', 'clinical-students' ], 'spec' => 'Pocket Size',
+		'desc' => 'A pocket-sized retractable tape measure in a round case, for MUAC, head circumference and wound measurements.',
+		'fabric' => "Round plastic case, retractable tape in cm and inches.",
+		'upsells' => [ 'tape-measure', 'digital-thermometer' ],
+	],
+	[
+		'slug' => 'tape-measure', 'name' => 'Tape Measure', 'cat' => 'equipment', 'price' => 150,
+		'roles' => [ 'nurses-midwives', 'clinical-students' ], 'spec' => 'cm & inches',
+		'desc' => 'A soft, flexible 150 cm tape measure marked in centimetres and inches.',
+		'fabric' => "Flexible fibre tape, cm and inches.",
+		'upsells' => [ 'retractable-tape', 'digital-thermometer' ],
+		'videos' => ask_video_names( 'tape-measure', 1 ),
 	],
 ];
+
+// Product videos are <slug>-1.mp4, <slug>-2.mp4… (with a matching .jpg poster) in the videos folder.
+function ask_video_names( $slug, $count ) {
+	return array_map( fn( $i ) => "$slug-$i", range( 1, $count ) );
+}
+
+// Copy the videos into uploads so the site serves them. The Playground demo skips this and
+// streams them from the demo repo instead (see the ask_video_base option in build-demo.mjs).
+if ( is_dir( '/wordpress/ask-videos' ) ) {
+	$dest = wp_upload_dir()['basedir'] . '/ask-videos';
+	wp_mkdir_p( $dest );
+	foreach ( array_merge( glob( '/wordpress/ask-videos/*.mp4' ) ?: [], glob( '/wordpress/ask-videos/*.jpg' ) ?: [] ) as $file ) {
+		copy( $file, $dest . '/' . basename( $file ) );
+	}
+}
 
 function ask_attach_images( $pid, $slug, $name ) {
 	$files = glob( "/wordpress/ask-images/$slug*.webp" ) ?: [];
@@ -264,7 +444,7 @@ foreach ( $products as $order => $d ) {
 	$p = $is_var ? new WC_Product_Variable() : new WC_Product_Simple();
 	$p->set_name( $d['name'] );
 	$p->set_slug( $d['slug'] );
-	$p->set_status( 'publish' );
+	$p->set_status( $d['status'] ?? 'publish' );
 	$p->set_menu_order( $order );
 	$p->set_description( $d['desc'] );
 	$p->set_short_description( $d['desc'] );
@@ -295,6 +475,7 @@ foreach ( $products as $order => $d ) {
 	$p->update_meta_data( '_ask_spec', $d['spec'] );
 	$p->update_meta_data( '_ask_fabric', $d['fabric'] );
 	if ( ! empty( $d['colour_img'] ) ) $p->update_meta_data( '_ask_colour_images', $d['colour_img'] );
+	if ( ! empty( $d['videos'] ) ) $p->update_meta_data( '_ask_videos', implode( "\n", $d['videos'] ) );
 	$pid = $p->save();
 
 	if ( $is_var ) {
