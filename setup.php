@@ -1,10 +1,20 @@
 <?php
 /**
- * Builds the ASK Scrubs store inside WordPress Playground.
- * Run by the blueprint after WooCommerce and the theme are installed.
- * Product photos are read from /wordpress/ask-images.
+ * Builds the ASK Scrubs store. Run once, after WooCommerce and the theme are installed:
+ * by the blueprint in WordPress Playground, or by install.php on real hosting.
+ * Product photos are read from ASK_DATA/ask-images and videos from ASK_DATA/ask-videos.
  */
-require_once '/wordpress/wp-load.php';
+if ( ! defined( 'ASK_DATA' ) ) {
+	define( 'ASK_DATA', '/wordpress' ); // Playground; install.php sets its own folder.
+}
+if ( ! defined( 'ABSPATH' ) ) {
+	require_once '/wordpress/wp-load.php';
+}
+// Running twice would duplicate every product.
+if ( get_option( 'ask_setup_done' ) ) {
+	return;
+}
+update_option( 'ask_setup_done', time() );
 require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
@@ -395,16 +405,16 @@ function ask_video_names( $slug, $count ) {
 
 // Copy the videos into uploads so the site serves them. The Playground demo skips this and
 // streams them from the demo repo instead (see the ask_video_base option in build-demo.mjs).
-if ( is_dir( '/wordpress/ask-videos' ) ) {
+if ( is_dir( ASK_DATA . '/ask-videos' ) ) {
 	$dest = wp_upload_dir()['basedir'] . '/ask-videos';
 	wp_mkdir_p( $dest );
-	foreach ( array_merge( glob( '/wordpress/ask-videos/*.mp4' ) ?: [], glob( '/wordpress/ask-videos/*.jpg' ) ?: [] ) as $file ) {
+	foreach ( array_merge( glob( ASK_DATA . '/ask-videos/*.mp4' ) ?: [], glob( ASK_DATA . '/ask-videos/*.jpg' ) ?: [] ) as $file ) {
 		copy( $file, $dest . '/' . basename( $file ) );
 	}
 }
 
 function ask_attach_images( $pid, $slug, $name ) {
-	$files = glob( "/wordpress/ask-images/$slug*.webp" ) ?: [];
+	$files = glob( ASK_DATA . "/ask-images/$slug*.webp" ) ?: [];
 	$files = array_values( array_filter( $files, fn( $f ) => preg_match( '#/' . preg_quote( $slug, '#' ) . '(-\d+)?\.webp$#', $f ) ) );
 	// slug.webp is the main photo, then slug-2.webp, slug-3.webp…
 	$num = fn( $f ) => preg_match( '#-(\d+)\.webp$#', substr( $f, strlen( $slug ) ), $m ) ? (int) $m[1] : 1;
